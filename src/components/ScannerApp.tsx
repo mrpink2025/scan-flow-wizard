@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
-import { InitialScreen } from "./scanner/InitialScreen";
+import { useState } from "react";
 import { ScanningScreen } from "./scanner/ScanningScreen";
 import { ResultScreen } from "./scanner/ResultScreen";
 
-type AppState = "initial" | "scanning" | "result";
+type AppState = "scanning" | "result";
 
 export interface ScanResult {
   totalIssues: number;
@@ -12,14 +11,19 @@ export interface ScanResult {
 }
 
 export const ScannerApp = () => {
-  const [appState, setAppState] = useState<AppState>("initial");
+  const [appState, setAppState] = useState<AppState>("scanning");
   const [scanResult, setScanResult] = useState<ScanResult>({
     totalIssues: 0,
     criticalIssues: 0,
     logs: [],
   });
 
-  const handleStartScan = () => {
+  const handleScanComplete = (result: ScanResult) => {
+    setScanResult(result);
+    setAppState("result");
+  };
+
+  const handleRestart = () => {
     setAppState("scanning");
     setScanResult({
       totalIssues: 0,
@@ -28,19 +32,9 @@ export const ScannerApp = () => {
     });
   };
 
-  const handleScanComplete = (result: ScanResult) => {
-    setScanResult(result);
-    setAppState("result");
-  };
-
-  const handleRestart = () => {
-    setAppState("initial");
-  };
-
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-4xl">
-        {appState === "initial" && <InitialScreen onStart={handleStartScan} />}
         {appState === "scanning" && <ScanningScreen onComplete={handleScanComplete} />}
         {appState === "result" && <ResultScreen result={scanResult} onRestart={handleRestart} />}
       </div>

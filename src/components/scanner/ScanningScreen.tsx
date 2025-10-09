@@ -156,9 +156,12 @@ export const ScanningScreen = ({ onComplete }: ScanningScreenProps) => {
       } else {
         clearInterval(interval);
         setTimeout(() => {
+          const criticalCount = allLogs.filter(log => log.type === "critical").length;
+          const warningCount = allLogs.filter(log => log.type === "warning").length;
+          
           onComplete({
-            totalIssues: warnings + critical,
-            criticalIssues: critical,
+            totalIssues: warningCount + criticalCount,
+            criticalIssues: criticalCount,
             logs: allLogs,
           });
         }, 1000);

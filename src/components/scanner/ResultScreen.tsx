@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Download, RotateCcw, CheckCircle2, AlertTriangle, AlertCircle } from "lucide-react";
+import { Download, RotateCcw, CheckCircle2, AlertTriangle, AlertCircle, Info } from "lucide-react";
 import { ScanResult } from "../ScannerApp";
 import { toast } from "sonner";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 interface ResultScreenProps {
   result: ScanResult;
@@ -15,7 +16,9 @@ export const ResultScreen = ({ result, onRestart }: ResultScreenProps) => {
     window.open("/download?installer=monitor", "_blank");
   };
 
-  const warningCount = result.logs.filter((log) => log.type === "warning").length;
+  const criticalLogs = result.logs.filter(log => log.type === "critical");
+  const warningLogs = result.logs.filter(log => log.type === "warning");
+  const warningCount = warningLogs.length;
 
   return (
     <div className="animate-fade-in">
@@ -76,6 +79,96 @@ export const ResultScreen = ({ result, onRestart }: ResultScreenProps) => {
             </ul>
           </div>
         )}
+
+        {/* Seção Detalhada de Erros */}
+        <div className="bg-card border border-border rounded-lg p-6 mb-6">
+          <h3 className="text-xl font-semibold mb-4 text-primary flex items-center gap-2">
+            <AlertCircle className="w-6 h-6" />
+            Detalhes das Falhas Encontradas
+          </h3>
+          
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="critical" className="border-destructive/30">
+              <AccordionTrigger className="hover:no-underline">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="w-5 h-5 text-destructive" />
+                  <span className="text-destructive font-semibold">
+                    Falhas Críticas ({criticalLogs.length})
+                  </span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="bg-destructive/5 rounded border border-destructive/20 p-4 max-h-64 overflow-y-auto">
+                  {criticalLogs.map((log, index) => (
+                    <div
+                      key={index}
+                      className="mb-3 last:mb-0 flex items-start gap-2 text-sm"
+                    >
+                      <AlertCircle className="w-4 h-4 text-destructive flex-shrink-0 mt-0.5" />
+                      <span className="text-destructive font-medium">{log.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="warnings" className="border-warning/30">
+              <AccordionTrigger className="hover:no-underline">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-warning" />
+                  <span className="text-warning font-semibold">
+                    Alertas ({warningLogs.length})
+                  </span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="bg-warning/5 rounded border border-warning/20 p-4 max-h-64 overflow-y-auto">
+                  {warningLogs.map((log, index) => (
+                    <div
+                      key={index}
+                      className="mb-3 last:mb-0 flex items-start gap-2 text-sm"
+                    >
+                      <AlertTriangle className="w-4 h-4 text-warning flex-shrink-0 mt-0.5" />
+                      <span className="text-warning font-medium">{log.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="all" className="border-border">
+              <AccordionTrigger className="hover:no-underline">
+                <div className="flex items-center gap-2">
+                  <Info className="w-5 h-5 text-primary" />
+                  <span className="text-foreground font-semibold">
+                    Todas as Verificações ({result.logs.length})
+                  </span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="bg-secondary/30 rounded border border-border p-4 max-h-80 overflow-y-auto font-mono text-xs">
+                  {result.logs.map((log, index) => (
+                    <div
+                      key={index}
+                      className={`mb-2 last:mb-0 flex items-start gap-2 ${
+                        log.type === "warning"
+                          ? "text-warning"
+                          : log.type === "critical"
+                          ? "text-destructive font-semibold"
+                          : "text-foreground/80"
+                      }`}
+                    >
+                      <span className="text-muted-foreground">[{String(index + 1).padStart(2, "0")}]</span>
+                      {log.type === "warning" && <AlertTriangle className="w-3 h-3 flex-shrink-0 mt-0.5" />}
+                      {log.type === "critical" && <AlertCircle className="w-3 h-3 flex-shrink-0 mt-0.5" />}
+                      <span>{log.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
 
         <div className="space-y-4">
           <Button

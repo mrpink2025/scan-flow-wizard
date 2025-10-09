@@ -8,7 +8,7 @@ type AppState = "initial" | "scanning" | "result";
 export interface ScanResult {
   totalIssues: number;
   criticalIssues: number;
-  logs: Array<{ text: string; type: "info" | "warning" | "critical" }>;
+  logs: Array<{ text: string; type: "info" | "warning" | "critical"; category?: string }>;
 }
 
 export const ScannerApp = () => {

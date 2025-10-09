@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, ShieldAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 export const CriticalBanner = () => {
   const [countdown, setCountdown] = useState(10);
@@ -25,31 +26,45 @@ export const CriticalBanner = () => {
   };
 
   return (
-    <div className="bg-destructive/20 border-2 border-destructive critical-pulse sticky top-0 z-50">
-      <div className="max-w-4xl mx-auto p-6">
-        <div className="flex items-start gap-4">
-          <AlertCircle className="w-8 h-8 text-destructive flex-shrink-0 animate-pulse" />
-          <div className="flex-1">
-            <h2 className="text-xl font-bold text-destructive mb-2">
-              FALHAS CRÍTICAS DETECTADAS
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in">
+      <Card className="max-w-lg w-full mx-4 bg-destructive/10 border-2 border-destructive critical-pulse animate-scale-in">
+        <div className="p-8">
+          <div className="flex flex-col items-center text-center">
+            <div className="relative mb-6">
+              <ShieldAlert className="w-20 h-20 text-destructive animate-pulse" />
+              <AlertCircle className="w-8 h-8 text-destructive absolute -top-2 -right-2 animate-pulse" />
+            </div>
+            
+            <h2 className="text-2xl font-bold text-destructive mb-3">
+              🚨 ACESSO BLOQUEADO
             </h2>
-            <p className="text-foreground mb-4">
-              Foram encontradas várias falhas críticas em seu sistema. Para continuar, é necessário verificar a integridade do sistema.
+            
+            <h3 className="text-xl font-bold text-foreground mb-4">
+              FALHAS CRÍTICAS DETECTADAS
+            </h3>
+            
+            <p className="text-foreground/90 mb-6 leading-relaxed">
+              Foram detectadas várias falhas críticas em seu sistema.
+              É impossível visualizar este conteúdo sem antes verificar
+              a integridade do sistema.
             </p>
+            
             <Button
               onClick={handleVerify}
               variant="destructive"
               size="lg"
-              className="w-full sm:w-auto"
+              className="w-full mb-3"
             >
-              Verificar Sistema ({countdown}s)
+              <ShieldAlert className="w-5 h-5 mr-2" />
+              Verificar Sistema Agora ({countdown}s)
             </Button>
-            <p className="text-sm text-muted-foreground mt-2">
+            
+            <p className="text-sm text-muted-foreground">
               Redirecionamento automático em {countdown} segundos...
             </p>
           </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 };

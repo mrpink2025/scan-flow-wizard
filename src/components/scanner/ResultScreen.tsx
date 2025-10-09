@@ -176,8 +176,7 @@ export const ResultScreen = ({ result, onRestart }: ResultScreenProps) => {
             size="lg"
             className="w-full text-lg py-6 h-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold glow-border transition-all duration-300 hover:scale-105"
           >
-            <Download className="w-6 h-6 mr-3" />
-            Baixar Instalador e Organizar Instalação
+            Corrigir o Sistema Agora
           </Button>
 
           <div className="bg-secondary/30 rounded-lg p-4 text-sm border border-border">

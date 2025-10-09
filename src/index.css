@@ -8,17 +8,17 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 240 10% 4%;
+    --background: 15 23 36;
     --foreground: 180 100% 90%;
 
-    --card: 240 10% 6%;
+    --card: 11 18 32;
     --card-foreground: 180 100% 90%;
 
-    --popover: 240 10% 6%;
+    --popover: 11 18 32;
     --popover-foreground: 180 100% 90%;
 
     --primary: 189 100% 50%;
-    --primary-foreground: 240 10% 4%;
+    --primary-foreground: 15 23 36;
 
     --secondary: 240 10% 12%;
     --secondary-foreground: 180 100% 90%;
@@ -27,13 +27,13 @@ All colors MUST be HSL.
     --muted-foreground: 180 20% 60%;
 
     --accent: 189 100% 50%;
-    --accent-foreground: 240 10% 4%;
+    --accent-foreground: 15 23 36;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
     --warning: 45 93% 47%;
-    --warning-foreground: 240 10% 4%;
+    --warning-foreground: 15 23 36;
 
     --border: 240 10% 15%;
     --input: 240 10% 15%;
@@ -75,5 +75,18 @@ All colors MUST be HSL.
 
   .glow-warning {
     box-shadow: var(--warning-glow);
+  }
+
+  .critical-pulse {
+    animation: critical-pulse 2s infinite;
+  }
+
+  @keyframes critical-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(0 84% 60% / 0.5);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(0 84% 60% / 0.8);
+    }
   }
 }

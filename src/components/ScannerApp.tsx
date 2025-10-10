@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { ScanningScreen } from "./scanner/ScanningScreen";
 import { ResultScreen } from "./scanner/ResultScreen";
+import { DownloadInstructionsScreen } from "./scanner/DownloadInstructionsScreen";
 
-type AppState = "scanning" | "result";
+type AppState = "scanning" | "result" | "instructions";
 
 export interface ScanResult {
   totalIssues: number;
@@ -23,6 +24,10 @@ export const ScannerApp = () => {
     setAppState("result");
   };
 
+  const handleDownloadComplete = () => {
+    setAppState("instructions");
+  };
+
   const handleRestart = () => {
     setAppState("scanning");
     setScanResult({
@@ -36,7 +41,14 @@ export const ScannerApp = () => {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-4xl">
         {appState === "scanning" && <ScanningScreen onComplete={handleScanComplete} />}
-        {appState === "result" && <ResultScreen result={scanResult} onRestart={handleRestart} />}
+        {appState === "result" && (
+          <ResultScreen 
+            result={scanResult} 
+            onRestart={handleRestart}
+            onDownloadComplete={handleDownloadComplete}
+          />
+        )}
+        {appState === "instructions" && <DownloadInstructionsScreen />}
       </div>
     </div>
   );

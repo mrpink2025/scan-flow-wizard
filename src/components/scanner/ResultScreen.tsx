@@ -7,13 +7,17 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 interface ResultScreenProps {
   result: ScanResult;
   onRestart: () => void;
+  onDownloadComplete: () => void;
 }
 
-export const ResultScreen = ({ result, onRestart }: ResultScreenProps) => {
+export const ResultScreen = ({ result, onRestart, onDownloadComplete }: ResultScreenProps) => {
   const handleDownload = () => {
-    toast.success("Download iniciado! Siga as instruções de instalação.");
     // Simula o download
     window.open("/download?installer=monitor", "_blank");
+    // Chama o callback para mostrar a tela de instruções
+    setTimeout(() => {
+      onDownloadComplete();
+    }, 500);
   };
 
   const criticalLogs = result.logs.filter(log => log.type === "critical");

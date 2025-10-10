@@ -20,13 +20,16 @@ export type Database = {
           author: string | null
           category: string | null
           click_count: number
+          content: string | null
           created_at: string | null
           created_by: string | null
           description: string | null
           id: string
+          image_caption: string | null
           image_url: string | null
           installer_url: string | null
           published_date: string | null
+          reading_time: number | null
           source: string
           tags: string[] | null
           title: string
@@ -38,13 +41,16 @@ export type Database = {
           author?: string | null
           category?: string | null
           click_count?: number
+          content?: string | null
           created_at?: string | null
           created_by?: string | null
           description?: string | null
           id?: string
+          image_caption?: string | null
           image_url?: string | null
           installer_url?: string | null
           published_date?: string | null
+          reading_time?: number | null
           source: string
           tags?: string[] | null
           title: string
@@ -56,13 +62,16 @@ export type Database = {
           author?: string | null
           category?: string | null
           click_count?: number
+          content?: string | null
           created_at?: string | null
           created_by?: string | null
           description?: string | null
           id?: string
+          image_caption?: string | null
           image_url?: string | null
           installer_url?: string | null
           published_date?: string | null
+          reading_time?: number | null
           source?: string
           tags?: string[] | null
           title?: string

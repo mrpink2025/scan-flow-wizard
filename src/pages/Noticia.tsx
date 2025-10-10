@@ -14,7 +14,7 @@ const Noticia = () => {
   const { data: news, isLoading, incrementClick } = useNewsBlock(id);
   const { isDetecting } = useLocalization();
   const { translate } = useTranslate();
-  const [translatedNews, setTranslatedNews] = useState({ title: '', description: '' });
+  const [translatedNews, setTranslatedNews] = useState({ title: '', description: '', content: '' });
 
   // Incrementar contador quando notícia for carregada
   useEffect(() => {
@@ -23,14 +23,15 @@ const Noticia = () => {
     }
   }, [news?.id]);
 
-  // Traduzir título e descrição
+  // Traduzir título, descrição e conteúdo
   useEffect(() => {
     if (news) {
       Promise.all([
         translate(news.title),
         translate(news.description || ''),
-      ]).then(([title, description]) => {
-        setTranslatedNews({ title, description });
+        translate(news.content || ''),
+      ]).then(([title, description, content]) => {
+        setTranslatedNews({ title, description, content });
       });
     }
   }, [news, translate]);
@@ -69,11 +70,15 @@ const Noticia = () => {
         <NewsPreview
           title={translatedNews.title || news.title}
           description={translatedNews.description || (news.description ?? undefined)}
+          content={translatedNews.content || (news.content ?? undefined)}
           source={news.source}
           imageUrl={news.image_url ?? undefined}
+          imageCaption={news.image_caption ?? undefined}
           publishedDate={news.published_date ?? undefined}
           author={news.author ?? undefined}
           category={news.category ?? undefined}
+          tags={news.tags ?? undefined}
+          readingTime={news.reading_time ?? undefined}
           url={news.url}
         />
       </div>

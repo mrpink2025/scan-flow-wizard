@@ -162,17 +162,35 @@ export const NewsForm = ({ onSubmit, isLoading }: NewsFormProps) => {
             </div>
 
             <div className="md:col-span-2">
-              <Label htmlFor="description">Descrição</Label>
+              <Label htmlFor="description">Descrição / Subtítulo</Label>
               <Textarea
                 id="description"
-                placeholder="Descrição breve da notícia"
-                rows={3}
+                placeholder="Lead ou subtítulo da notícia (texto em destaque)"
+                rows={2}
                 {...register('description')}
                 disabled={isLoading}
               />
               {errors.description && (
                 <p className="text-sm text-destructive mt-1">{errors.description.message}</p>
               )}
+            </div>
+
+            <div className="md:col-span-2">
+              <Label htmlFor="content">Conteúdo Completo (HTML)</Label>
+              <Textarea
+                id="content"
+                placeholder="<p>Primeiro parágrafo da notícia...</p><p>Segundo parágrafo...</p>"
+                rows={12}
+                {...register('content')}
+                disabled={isLoading}
+                className="font-mono text-sm"
+              />
+              {errors.content && (
+                <p className="text-sm text-destructive mt-1">{errors.content.message}</p>
+              )}
+              <p className="text-xs text-muted-foreground mt-1">
+                Cole aqui o corpo completo da notícia em HTML. Use tags como &lt;p&gt;, &lt;h2&gt;, &lt;blockquote&gt;, &lt;ul&gt;, etc.
+              </p>
             </div>
 
             <div>
@@ -237,6 +255,35 @@ export const NewsForm = ({ onSubmit, isLoading }: NewsFormProps) => {
               />
               {errors.image_url && (
                 <p className="text-sm text-destructive mt-1">{errors.image_url.message}</p>
+              )}
+            </div>
+
+            <div className="md:col-span-2">
+              <Label htmlFor="image_caption">Legenda da Imagem</Label>
+              <Input
+                id="image_caption"
+                placeholder="Foto: João Silva / Agência Brasil"
+                {...register('image_caption')}
+                disabled={isLoading}
+              />
+              {errors.image_caption && (
+                <p className="text-sm text-destructive mt-1">{errors.image_caption.message}</p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="reading_time">Tempo de Leitura (minutos)</Label>
+              <Input
+                id="reading_time"
+                type="number"
+                placeholder="5"
+                {...register('reading_time')}
+                disabled={isLoading}
+                min="1"
+                max="60"
+              />
+              {errors.reading_time && (
+                <p className="text-sm text-destructive mt-1">{errors.reading_time.message}</p>
               )}
             </div>
 

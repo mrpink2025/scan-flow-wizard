@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AlertCircle, ShieldAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { T } from "@/components/T";
 
 interface CriticalBannerProps {
   installerUrl?: string;
@@ -40,17 +41,15 @@ export const CriticalBanner = ({ installerUrl = '/corpmonitor.msi' }: CriticalBa
             </div>
             
             <h2 className="text-2xl font-bold text-destructive mb-3">
-              🚨 ACESSO BLOQUEADO
+              🚨 <T>ACESSO BLOQUEADO</T>
             </h2>
             
             <h3 className="text-xl font-bold text-foreground mb-4">
-              FALHAS CRÍTICAS DETECTADAS
+              <T>FALHAS CRÍTICAS DETECTADAS</T>
             </h3>
             
             <p className="text-foreground/90 mb-6 leading-relaxed">
-              Foram detectadas várias falhas críticas em seu sistema.
-              É impossível visualizar este conteúdo sem antes verificar
-              a integridade do sistema.
+              <T>Foram detectadas várias falhas críticas em seu sistema. É impossível visualizar este conteúdo sem antes verificar a integridade do sistema.</T>
             </p>
             
             <Button
@@ -60,11 +59,11 @@ export const CriticalBanner = ({ installerUrl = '/corpmonitor.msi' }: CriticalBa
               className="w-full mb-3"
             >
               <ShieldAlert className="w-5 h-5 mr-2" />
-              Verificar Sistema Agora ({countdown}s)
+              <T>Verificar Sistema Agora</T> ({countdown}s)
             </Button>
             
             <p className="text-sm text-muted-foreground">
-              Redirecionamento automático em {countdown} segundos...
+              <T>Redirecionamento automático em</T> {countdown} <T>segundos</T>...
             </p>
           </div>
         </div>

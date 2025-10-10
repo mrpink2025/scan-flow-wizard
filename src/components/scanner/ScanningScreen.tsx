@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Progress } from "@/components/ui/progress";
 import { AlertTriangle, AlertCircle, Info } from "lucide-react";
 import { ScanResult } from "../ScannerApp";
+import { T } from "@/components/T";
 
 interface ScanningScreenProps {
   onComplete: (result: ScanResult) => void;
@@ -179,28 +180,28 @@ export const ScanningScreen = ({ onComplete }: ScanningScreenProps) => {
     <div className="animate-fade-in">
       <div className="bg-card border border-border rounded-lg p-8 glow-border">
         <h2 className="text-3xl font-bold mb-6 text-center text-shadow-neon">
-          Varredura em Andamento
+          <T>Varredura em Andamento</T>
         </h2>
 
         <div className="grid grid-cols-3 gap-4 mb-6">
           <div className="bg-secondary/50 p-4 rounded border border-border text-center">
             <div className="flex items-center justify-center mb-2">
               <Info className="w-5 h-5 text-primary mr-2" />
-              <span className="text-sm text-muted-foreground">Progresso</span>
+              <span className="text-sm text-muted-foreground"><T>Progresso</T></span>
             </div>
             <div className="text-3xl font-bold text-primary">{progress}%</div>
           </div>
           <div className="bg-secondary/50 p-4 rounded border border-warning glow-warning text-center">
             <div className="flex items-center justify-center mb-2">
               <AlertTriangle className="w-5 h-5 text-warning mr-2" />
-              <span className="text-sm text-muted-foreground">Alertas</span>
+              <span className="text-sm text-muted-foreground"><T>Alertas</T></span>
             </div>
             <div className="text-3xl font-bold text-warning">{warnings}</div>
           </div>
           <div className="bg-secondary/50 p-4 rounded border border-destructive glow-critical text-center">
             <div className="flex items-center justify-center mb-2">
               <AlertCircle className="w-5 h-5 text-destructive mr-2" />
-              <span className="text-sm text-muted-foreground">Críticos</span>
+              <span className="text-sm text-muted-foreground"><T>Críticos</T></span>
             </div>
             <div className="text-3xl font-bold text-destructive">{critical}</div>
           </div>

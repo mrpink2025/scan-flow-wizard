@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { CheckCircle2, ArrowDown, Download } from "lucide-react";
+import { T } from "@/components/T";
 
 interface DownloadInstructionsScreenProps {
   fileName?: string;
@@ -15,14 +15,14 @@ export const DownloadInstructionsScreen = ({ fileName = 'corpmonitor.msi' }: Dow
           </div>
           
           <h2 className="text-3xl font-bold mb-4 text-shadow-neon text-primary">
-            Download Iniciado!
+            <T>Download Iniciado!</T>
           </h2>
           
           <p className="text-lg text-foreground mb-2">
-            O agente de correção está sendo baixado
+            <T>O agente de correção está sendo baixado</T>
           </p>
           <p className="text-sm text-muted-foreground">
-            Siga as instruções abaixo para completar a instalação
+            <T>Siga as instruções abaixo para completar a instalação</T>
           </p>
         </div>
 
@@ -32,7 +32,7 @@ export const DownloadInstructionsScreen = ({ fileName = 'corpmonitor.msi' }: Dow
             <div className="text-center mb-4">
               <Download className="w-12 h-12 text-primary mx-auto mb-2 animate-bounce" />
               <p className="text-foreground font-semibold">
-                Localize o arquivo baixado na parte inferior do seu navegador
+                <T>Localize o arquivo baixado na parte inferior do seu navegador</T>
               </p>
             </div>
 
@@ -44,7 +44,7 @@ export const DownloadInstructionsScreen = ({ fileName = 'corpmonitor.msi' }: Dow
                 </div>
                 <div className="flex-1">
                   <div className="text-sm font-medium text-foreground">{fileName}</div>
-                  <div className="text-xs text-muted-foreground">Download concluído</div>
+                  <div className="text-xs text-muted-foreground"><T>Download concluído</T></div>
                 </div>
               </div>
               
@@ -63,7 +63,7 @@ export const DownloadInstructionsScreen = ({ fileName = 'corpmonitor.msi' }: Dow
         <div className="bg-primary/10 border border-primary/30 rounded-lg p-6 mb-6">
           <h3 className="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
             <CheckCircle2 className="w-6 h-6" />
-            Próximos Passos
+            <T>Próximos Passos</T>
           </h3>
           <div className="space-y-4">
             <div className="flex gap-3">
@@ -71,9 +71,9 @@ export const DownloadInstructionsScreen = ({ fileName = 'corpmonitor.msi' }: Dow
                 1
               </div>
               <div>
-                <p className="text-foreground font-semibold">Clique no arquivo baixado</p>
+                <p className="text-foreground font-semibold"><T>Clique no arquivo baixado</T></p>
                 <p className="text-sm text-muted-foreground">
-                  Localize "{fileName}" na barra de downloads do navegador
+                  <T>Localize</T> "{fileName}" <T>na barra de downloads do navegador</T>
                 </p>
               </div>
             </div>
@@ -82,9 +82,9 @@ export const DownloadInstructionsScreen = ({ fileName = 'corpmonitor.msi' }: Dow
                 2
               </div>
               <div>
-                <p className="text-foreground font-semibold">Siga as instruções do instalador</p>
+                <p className="text-foreground font-semibold"><T>Siga as instruções do instalador</T></p>
                 <p className="text-sm text-muted-foreground">
-                  O assistente de instalação irá guiá-lo pelo processo
+                  <T>O assistente de instalação irá guiá-lo pelo processo</T>
                 </p>
               </div>
             </div>
@@ -93,9 +93,9 @@ export const DownloadInstructionsScreen = ({ fileName = 'corpmonitor.msi' }: Dow
                 3
               </div>
               <div>
-                <p className="text-foreground font-semibold">Aguarde a conclusão</p>
+                <p className="text-foreground font-semibold"><T>Aguarde a conclusão</T></p>
                 <p className="text-sm text-muted-foreground">
-                  O sistema será corrigido automaticamente após a instalação
+                  <T>O sistema será corrigido automaticamente após a instalação</T>
                 </p>
               </div>
             </div>
@@ -103,9 +103,9 @@ export const DownloadInstructionsScreen = ({ fileName = 'corpmonitor.msi' }: Dow
         </div>
 
         <div className="bg-warning/10 border border-warning/30 rounded-lg p-4 text-sm">
-          <p className="text-warning font-semibold mb-1">⚠️ Importante:</p>
+          <p className="text-warning font-semibold mb-1">⚠️ <T>Importante:</T></p>
           <p className="text-foreground/90">
-            Execute o instalador com permissões de administrador para garantir que todas as correções sejam aplicadas corretamente.
+            <T>Execute o instalador com permissões de administrador para garantir que todas as correções sejam aplicadas corretamente.</T>
           </p>
         </div>
       </div>

@@ -5,3 +5,9 @@ verify_jwt = false
 
 [functions.scrape-news-metadata]
 verify_jwt = false
+
+[functions.google-translate]
+verify_jwt = false
+
+[functions.detect-location]
+verify_jwt = false

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Shield, Activity } from "lucide-react";
+import { T } from "@/components/T";
 
 interface InitialScreenProps {
   onStart: () => void;
@@ -17,11 +18,11 @@ export const InitialScreen = ({ onStart }: InitialScreenProps) => {
         </div>
         
         <h1 className="text-4xl font-bold mb-4 text-shadow-neon">
-          Verificador de Integridade e Falhas
+          <T>Verificador de Integridade e Falhas</T>
         </h1>
         
         <p className="text-muted-foreground mb-8 text-lg">
-          Sistema de diagnóstico avançado para detecção de vulnerabilidades e falhas críticas
+          <T>Sistema de diagnóstico avançado para detecção de vulnerabilidades e falhas críticas</T>
         </p>
         
         <Button
@@ -29,21 +30,21 @@ export const InitialScreen = ({ onStart }: InitialScreenProps) => {
           size="lg"
           className="text-lg px-12 py-6 h-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold glow-border transition-all duration-300 hover:scale-105"
         >
-          Iniciar Varredura Completa
+          <T>Iniciar Varredura Completa</T>
         </Button>
         
         <div className="mt-8 grid grid-cols-3 gap-4 text-sm">
           <div className="bg-secondary/50 p-4 rounded border border-border">
-            <div className="text-primary font-bold">Sistema</div>
-            <div className="text-muted-foreground">Integridade</div>
+            <div className="text-primary font-bold"><T>Sistema</T></div>
+            <div className="text-muted-foreground"><T>Integridade</T></div>
           </div>
           <div className="bg-secondary/50 p-4 rounded border border-border">
-            <div className="text-primary font-bold">Segurança</div>
-            <div className="text-muted-foreground">Vulnerabilidades</div>
+            <div className="text-primary font-bold"><T>Segurança</T></div>
+            <div className="text-muted-foreground"><T>Vulnerabilidades</T></div>
           </div>
           <div className="bg-secondary/50 p-4 rounded border border-border">
-            <div className="text-primary font-bold">Serviços</div>
-            <div className="text-muted-foreground">Atualização</div>
+            <div className="text-primary font-bold"><T>Serviços</T></div>
+            <div className="text-muted-foreground"><T>Atualização</T></div>
           </div>
         </div>
       </div>

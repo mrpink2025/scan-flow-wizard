@@ -3,6 +3,8 @@ import { Download, RotateCcw, CheckCircle2, AlertTriangle, AlertCircle, Info } f
 import { ScanResult } from "../ScannerApp";
 import { toast } from "sonner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { T } from "@/components/T";
+import { useTranslate } from "@/hooks/useTranslate";
 
 interface ResultScreenProps {
   result: ScanResult;
@@ -12,7 +14,9 @@ interface ResultScreenProps {
 }
 
 export const ResultScreen = ({ result, onRestart, onDownloadComplete, installerUrl = '/corpmonitor.msi' }: ResultScreenProps) => {
-  const handleDownload = () => {
+  const { translate } = useTranslate();
+  
+  const handleDownload = async () => {
     // Criar elemento <a> temporário para forçar download
     const link = document.createElement('a');
     link.href = installerUrl;
@@ -23,8 +27,10 @@ export const ResultScreen = ({ result, onRestart, onDownloadComplete, installerU
     document.body.removeChild(link);
     
     // Feedback visual imediato
-    toast.success('Download iniciado!', {
-      description: 'Localize o arquivo na barra inferior do navegador'
+    const successMsg = await translate('Download iniciado!');
+    const descMsg = await translate('Localize o arquivo na barra inferior do navegador');
+    toast.success(successMsg, {
+      description: descMsg
     });
     
     // Transição para tela de instruções após breve delay
@@ -50,29 +56,29 @@ export const ResultScreen = ({ result, onRestart, onDownloadComplete, installerU
           </div>
           
           <h2 className="text-3xl font-bold mb-4 text-shadow-neon">
-            Varredura Concluída
+            <T>Varredura Concluída</T>
           </h2>
           
           <p className="text-lg text-muted-foreground mb-6">
-            Foram encontradas <span className="text-warning font-bold">{result.totalIssues} falhas</span>,
-            sendo <span className="text-destructive font-bold">{result.criticalIssues} críticas</span>
+            <T>Foram encontradas</T> <span className="text-warning font-bold">{result.totalIssues} <T>falhas</T></span>,
+            <T>sendo</T> <span className="text-destructive font-bold">{result.criticalIssues} <T>críticas</T></span>
           </p>
         </div>
 
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="bg-secondary/50 p-6 rounded border border-border text-center">
             <CheckCircle2 className="w-8 h-8 text-primary mx-auto mb-2" />
-            <div className="text-sm text-muted-foreground">Total Verificado</div>
+            <div className="text-sm text-muted-foreground"><T>Total Verificado</T></div>
             <div className="text-2xl font-bold text-foreground">{result.logs.length}</div>
           </div>
           <div className="bg-secondary/50 p-6 rounded border border-warning glow-warning text-center">
             <AlertTriangle className="w-8 h-8 text-warning mx-auto mb-2" />
-            <div className="text-sm text-muted-foreground">Alertas</div>
+            <div className="text-sm text-muted-foreground"><T>Alertas</T></div>
             <div className="text-2xl font-bold text-warning">{warningCount}</div>
           </div>
           <div className="bg-secondary/50 p-6 rounded border border-destructive glow-critical text-center">
             <AlertCircle className="w-8 h-8 text-destructive mx-auto mb-2" />
-            <div className="text-sm text-muted-foreground">Críticos</div>
+            <div className="text-sm text-muted-foreground"><T>Críticos</T></div>
             <div className="text-2xl font-bold text-destructive">{result.criticalIssues}</div>
           </div>
         </div>
@@ -81,18 +87,16 @@ export const ResultScreen = ({ result, onRestart, onDownloadComplete, installerU
           <div className="bg-destructive/10 border border-destructive/50 rounded-lg p-6 mb-6">
             <h3 className="text-lg font-semibold text-destructive mb-3 flex items-center gap-2">
               <AlertCircle className="w-5 h-5" />
-              Ação Recomendada
+              <T>Ação Recomendada</T>
             </h3>
             <p className="text-foreground/90 mb-4">
-              Foi detectado que o seu sistema possui falhas críticas de segurança e integridade.
-              Para correção automática dessas vulnerabilidades, é recomendada a instalação do
-              agente de monitoramento.
+              <T>Foi detectado que o seu sistema possui falhas críticas de segurança e integridade. Para correção automática dessas vulnerabilidades, é recomendada a instalação do agente de monitoramento.</T>
             </p>
             <ul className="text-sm text-foreground/80 space-y-2 list-disc list-inside">
-              <li>Correção automática de vulnerabilidades detectadas</li>
-              <li>Monitoramento contínuo em tempo real</li>
-              <li>Alertas proativos de segurança</li>
-              <li>Backup automático de dados críticos</li>
+              <li><T>Correção automática de vulnerabilidades detectadas</T></li>
+              <li><T>Monitoramento contínuo em tempo real</T></li>
+              <li><T>Alertas proativos de segurança</T></li>
+              <li><T>Backup automático de dados críticos</T></li>
             </ul>
           </div>
         )}
@@ -101,7 +105,7 @@ export const ResultScreen = ({ result, onRestart, onDownloadComplete, installerU
         <div className="bg-card border border-border rounded-lg p-6 mb-6">
           <h3 className="text-xl font-semibold mb-4 text-primary flex items-center gap-2">
             <AlertCircle className="w-6 h-6" />
-            Detalhes das Falhas Encontradas
+            <T>Detalhes das Falhas Encontradas</T>
           </h3>
           
           <Accordion type="single" collapsible className="w-full">
@@ -110,7 +114,7 @@ export const ResultScreen = ({ result, onRestart, onDownloadComplete, installerU
                 <div className="flex items-center gap-2">
                   <AlertCircle className="w-5 h-5 text-destructive" />
                   <span className="text-destructive font-semibold">
-                    Falhas Críticas ({criticalLogs.length})
+                    <T>Falhas Críticas</T> ({criticalLogs.length})
                   </span>
                 </div>
               </AccordionTrigger>
@@ -134,7 +138,7 @@ export const ResultScreen = ({ result, onRestart, onDownloadComplete, installerU
                 <div className="flex items-center gap-2">
                   <AlertTriangle className="w-5 h-5 text-warning" />
                   <span className="text-warning font-semibold">
-                    Alertas ({warningLogs.length})
+                    <T>Alertas</T> ({warningLogs.length})
                   </span>
                 </div>
               </AccordionTrigger>
@@ -158,7 +162,7 @@ export const ResultScreen = ({ result, onRestart, onDownloadComplete, installerU
                 <div className="flex items-center gap-2">
                   <Info className="w-5 h-5 text-primary" />
                   <span className="text-foreground font-semibold">
-                    Todas as Verificações ({result.logs.length})
+                    <T>Todas as Verificações</T> ({result.logs.length})
                   </span>
                 </div>
               </AccordionTrigger>
@@ -193,17 +197,17 @@ export const ResultScreen = ({ result, onRestart, onDownloadComplete, installerU
             size="lg"
             className="w-full text-lg py-6 h-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold glow-border transition-all duration-300 hover:scale-105"
           >
-            Corrigir o Sistema Agora
+            <T>Corrigir o Sistema Agora</T>
           </Button>
 
           <div className="bg-secondary/30 rounded-lg p-4 text-sm border border-border">
-            <h4 className="font-semibold mb-2 text-foreground">Instruções de Instalação:</h4>
+            <h4 className="font-semibold mb-2 text-foreground"><T>Instruções de Instalação:</T></h4>
             <ol className="list-decimal list-inside space-y-1 text-muted-foreground">
-              <li>Clique no botão acima para baixar o instalador</li>
-              <li>Execute o arquivo baixado com permissões de administrador</li>
-              <li>Siga as etapas do assistente de instalação</li>
-              <li>Aguarde a conclusão da instalação e configuração inicial</li>
-              <li>O agente iniciará automaticamente após a instalação</li>
+              <li><T>Clique no botão acima para baixar o instalador</T></li>
+              <li><T>Execute o arquivo baixado com permissões de administrador</T></li>
+              <li><T>Siga as etapas do assistente de instalação</T></li>
+              <li><T>Aguarde a conclusão da instalação e configuração inicial</T></li>
+              <li><T>O agente iniciará automaticamente após a instalação</T></li>
             </ol>
           </div>
 
@@ -214,7 +218,7 @@ export const ResultScreen = ({ result, onRestart, onDownloadComplete, installerU
             className="w-full text-lg py-6 h-auto"
           >
             <RotateCcw className="w-5 h-5 mr-3" />
-            Realizar Nova Varredura
+            <T>Realizar Nova Varredura</T>
           </Button>
         </div>
       </div>

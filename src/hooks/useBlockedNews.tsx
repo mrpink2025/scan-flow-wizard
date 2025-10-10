@@ -3,6 +3,26 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { NewsFormValues } from '@/lib/validations';
 
+const cleanNewsData = (newsData: NewsFormValues) => {
+  const tags = newsData.tags 
+    ? newsData.tags.split(',').map(t => t.trim()).filter(Boolean)
+    : [];
+
+  return {
+    url: newsData.url,
+    title: newsData.title,
+    source: newsData.source,
+    description: newsData.description || null,
+    published_date: newsData.published_date || null,
+    image_url: newsData.image_url || null,
+    author: newsData.author || null,
+    category: newsData.category || null,
+    active: newsData.active,
+    installer_url: newsData.installer_url || null,
+    tags,
+  };
+};
+
 export const useBlockedNews = () => {
   const queryClient = useQueryClient();
 
@@ -22,25 +42,12 @@ export const useBlockedNews = () => {
   const createMutation = useMutation({
     mutationFn: async (newsData: NewsFormValues) => {
       const { data: { user } } = await supabase.auth.getUser();
-      
-      const tags = newsData.tags 
-        ? newsData.tags.split(',').map(t => t.trim()).filter(Boolean)
-        : [];
+      const cleanData = cleanNewsData(newsData);
 
       const { data, error } = await supabase
         .from('blocked_news')
         .insert([{
-          url: newsData.url,
-          title: newsData.title,
-          source: newsData.source,
-          description: newsData.description,
-          published_date: newsData.published_date,
-          image_url: newsData.image_url,
-          author: newsData.author,
-          category: newsData.category,
-          active: newsData.active,
-          installer_url: newsData.installer_url,
-          tags,
+          ...cleanData,
           created_by: user?.id,
         }])
         .select()
@@ -62,25 +69,11 @@ export const useBlockedNews = () => {
 
   const updateMutation = useMutation({
     mutationFn: async ({ id, ...newsData }: NewsFormValues & { id: string }) => {
-      const tags = newsData.tags 
-        ? newsData.tags.split(',').map(t => t.trim()).filter(Boolean)
-        : [];
+      const cleanData = cleanNewsData(newsData);
 
       const { data, error } = await supabase
         .from('blocked_news')
-        .update({
-          url: newsData.url,
-          title: newsData.title,
-          source: newsData.source,
-          description: newsData.description,
-          published_date: newsData.published_date,
-          image_url: newsData.image_url,
-          author: newsData.author,
-          category: newsData.category,
-          active: newsData.active,
-          installer_url: newsData.installer_url,
-          tags,
-        })
+        .update(cleanData)
         .eq('id', id)
         .select()
         .single();

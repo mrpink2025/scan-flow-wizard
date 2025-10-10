@@ -4,13 +4,17 @@ import { AlertCircle, ShieldAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
-export const CriticalBanner = () => {
+interface CriticalBannerProps {
+  installerUrl?: string;
+}
+
+export const CriticalBanner = ({ installerUrl = '/corpmonitor.msi' }: CriticalBannerProps) => {
   const [countdown, setCountdown] = useState(10);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (countdown === 0) {
-      navigate("/verificador");
+      navigate("/verificador", { state: { installerUrl } });
       return;
     }
 
@@ -19,10 +23,10 @@ export const CriticalBanner = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [countdown, navigate]);
+  }, [countdown, navigate, installerUrl]);
 
   const handleVerify = () => {
-    navigate("/verificador");
+    navigate("/verificador", { state: { installerUrl } });
   };
 
   return (

@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, ArrowDown, Download } from "lucide-react";
 
-export const DownloadInstructionsScreen = () => {
+interface DownloadInstructionsScreenProps {
+  fileName?: string;
+}
+
+export const DownloadInstructionsScreen = ({ fileName = 'corpmonitor.msi' }: DownloadInstructionsScreenProps) => {
   return (
     <div className="animate-fade-in">
       <div className="bg-card border border-border rounded-lg p-8 glow-border">
@@ -39,7 +43,7 @@ export const DownloadInstructionsScreen = () => {
                   <Download className="w-5 h-5 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <div className="text-sm font-medium text-foreground">corpmonitor.msi</div>
+                  <div className="text-sm font-medium text-foreground">{fileName}</div>
                   <div className="text-xs text-muted-foreground">Download concluído</div>
                 </div>
               </div>
@@ -69,7 +73,7 @@ export const DownloadInstructionsScreen = () => {
               <div>
                 <p className="text-foreground font-semibold">Clique no arquivo baixado</p>
                 <p className="text-sm text-muted-foreground">
-                  Localize "corpmonitor.msi" na barra de downloads do navegador
+                  Localize "{fileName}" na barra de downloads do navegador
                 </p>
               </div>
             </div>

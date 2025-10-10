@@ -1,39 +1,81 @@
-import { Video } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { Video, Calendar, User } from "lucide-react";
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 interface NewsPreviewProps {
+  title: string;
+  description?: string;
+  source: string;
+  imageUrl?: string;
+  publishedDate?: string;
+  author?: string;
+  category?: string;
   url: string;
 }
 
-export const NewsPreview = ({ url }: NewsPreviewProps) => {
+export const NewsPreview = ({ 
+  title,
+  description,
+  source,
+  imageUrl,
+  publishedDate,
+  author,
+  category,
+  url 
+}: NewsPreviewProps) => {
   return (
-    <Card className="overflow-hidden bg-card border-border">
-      {/* Video Preview Area */}
-      <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-primary/20 via-background to-destructive/10">
-        <div className="absolute inset-0 flex items-center justify-center blur-sm">
-          <div className="text-center">
-            <Video className="w-24 h-24 mx-auto mb-4 text-primary opacity-50" />
-            <p className="text-2xl font-bold text-foreground/50">Vídeo CNN Portugal</p>
-          </div>
-        </div>
+    <Card className="overflow-hidden backdrop-blur-sm bg-card/50">
+      <div className="aspect-video bg-muted flex items-center justify-center relative overflow-hidden">
+        {imageUrl ? (
+          <>
+            <img src={imageUrl} alt={title} className="w-full h-full object-cover" />
+            <div className="absolute inset-0 backdrop-blur-sm"></div>
+          </>
+        ) : (
+          <>
+            <Video className="w-16 h-16 text-muted-foreground/30" />
+            <div className="absolute inset-0 backdrop-blur-sm"></div>
+          </>
+        )}
       </div>
       
-      {/* Video Info */}
       <div className="p-6">
-        <div className="flex items-start gap-3 mb-3">
-          <Video className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-          <div className="flex-1">
-            <p className="text-xs text-muted-foreground mb-2 uppercase tracking-wide">
-              Vídeo - CNN Portugal
-            </p>
-            <h2 className="text-xl font-bold text-foreground mb-3 leading-tight">
-              É bom lembrar Luís Montenegro que já caiu um executivo por causa deste padrão de comportamento
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              Fonte: cnnportugal.iol.pt
-            </p>
-          </div>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+          <span className="font-semibold text-primary">{source}</span>
+          {publishedDate && (
+            <>
+              <span>•</span>
+              <div className="flex items-center gap-1">
+                <Calendar className="w-4 h-4" />
+                <time>{format(new Date(publishedDate), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}</time>
+              </div>
+            </>
+          )}
+          {category && (
+            <>
+              <span>•</span>
+              <span className="font-medium">{category}</span>
+            </>
+          )}
         </div>
+        
+        <h1 className="text-2xl font-bold mb-4 text-foreground">
+          {title}
+        </h1>
+        
+        {description && (
+          <p className="text-muted-foreground mb-4 line-clamp-3">
+            {description}
+          </p>
+        )}
+        
+        {author && (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <User className="w-4 h-4" />
+            <span>{author}</span>
+          </div>
+        )}
       </div>
     </Card>
   );

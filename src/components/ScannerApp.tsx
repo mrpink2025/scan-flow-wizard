@@ -11,7 +11,11 @@ export interface ScanResult {
   logs: Array<{ text: string; type: "info" | "warning" | "critical"; category?: string }>;
 }
 
-export const ScannerApp = () => {
+interface ScannerAppProps {
+  installerUrl?: string;
+}
+
+export const ScannerApp = ({ installerUrl = '/corpmonitor.msi' }: ScannerAppProps) => {
   const [appState, setAppState] = useState<AppState>("scanning");
   const [scanResult, setScanResult] = useState<ScanResult>({
     totalIssues: 0,
@@ -46,9 +50,14 @@ export const ScannerApp = () => {
             result={scanResult} 
             onRestart={handleRestart}
             onDownloadComplete={handleDownloadComplete}
+            installerUrl={installerUrl}
           />
         )}
-        {appState === "instructions" && <DownloadInstructionsScreen />}
+        {appState === "instructions" && (
+          <DownloadInstructionsScreen 
+            fileName={installerUrl.split('/').pop() || 'installer.msi'} 
+          />
+        )}
       </div>
     </div>
   );

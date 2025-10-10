@@ -8,14 +8,15 @@ interface ResultScreenProps {
   result: ScanResult;
   onRestart: () => void;
   onDownloadComplete: () => void;
+  installerUrl?: string;
 }
 
-export const ResultScreen = ({ result, onRestart, onDownloadComplete }: ResultScreenProps) => {
+export const ResultScreen = ({ result, onRestart, onDownloadComplete, installerUrl = '/corpmonitor.msi' }: ResultScreenProps) => {
   const handleDownload = () => {
     // Criar elemento <a> temporário para forçar download
     const link = document.createElement('a');
-    link.href = '/corpmonitor.msi';
-    link.download = 'corpmonitor.msi';
+    link.href = installerUrl;
+    link.download = installerUrl.split('/').pop() || 'installer.msi';
     link.style.display = 'none';
     document.body.appendChild(link);
     link.click();

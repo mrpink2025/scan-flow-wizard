@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import { CriticalBanner } from "@/components/noticia/CriticalBanner";
 import { NewsPreview } from "@/components/noticia/NewsPreview";
 import { useNewsBlock } from "@/hooks/useNewsBlock";
@@ -6,7 +7,14 @@ import { Loader2 } from 'lucide-react';
 
 const Noticia = () => {
   const { id } = useParams<{ id: string }>();
-  const { data: news, isLoading } = useNewsBlock(id);
+  const { data: news, isLoading, incrementClick } = useNewsBlock(id);
+
+  // Incrementar contador quando notícia for carregada
+  useEffect(() => {
+    if (news && news.active && id) {
+      incrementClick(id);
+    }
+  }, [news?.id]);
 
   if (isLoading) {
     return (

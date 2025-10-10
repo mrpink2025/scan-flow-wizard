@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Eye, Edit, Power, Trash2, Download } from 'lucide-react';
+import { Eye, Edit, Power, Trash2, Download, MousePointerClick } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
@@ -61,6 +61,12 @@ export const NewsCard = ({ news, onView, onEdit, onToggleStatus, onDelete }: New
                 <Badge variant="outline" className="gap-1 text-xs">
                   <Download className="w-3 h-3" />
                   Instalador Custom
+                </Badge>
+              )}
+              {typeof news.click_count === 'number' && (
+                <Badge variant="outline" className="gap-1 text-xs">
+                  <MousePointerClick className="w-3 h-3" />
+                  {news.click_count} {news.click_count === 1 ? 'visualização' : 'visualizações'}
                 </Badge>
               )}
             </div>

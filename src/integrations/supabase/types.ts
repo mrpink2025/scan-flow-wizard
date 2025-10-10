@@ -19,6 +19,7 @@ export type Database = {
           active: boolean | null
           author: string | null
           category: string | null
+          click_count: number
           created_at: string | null
           created_by: string | null
           description: string | null
@@ -36,6 +37,7 @@ export type Database = {
           active?: boolean | null
           author?: string | null
           category?: string | null
+          click_count?: number
           created_at?: string | null
           created_by?: string | null
           description?: string | null
@@ -53,6 +55,7 @@ export type Database = {
           active?: boolean | null
           author?: string | null
           category?: string | null
+          click_count?: number
           created_at?: string | null
           created_by?: string | null
           description?: string | null
@@ -100,6 +103,10 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      increment_news_click: {
+        Args: { news_id: string }
+        Returns: number
       }
     }
     Enums: {

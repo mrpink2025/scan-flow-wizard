@@ -135,6 +135,7 @@ export const ScanningScreen = ({ onComplete }: ScanningScreenProps) => {
   const [warnings, setWarnings] = useState(0);
   const [critical, setCritical] = useState(0);
   const logsEndRef = useRef<HTMLDivElement>(null);
+  const logsContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const allLogs = generateScanLogs();
@@ -173,7 +174,9 @@ export const ScanningScreen = ({ onComplete }: ScanningScreenProps) => {
   }, [onComplete]);
 
   useEffect(() => {
-    logsEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (logsContainerRef.current) {
+      logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
+    }
   }, [logs]);
 
   return (
@@ -211,7 +214,7 @@ export const ScanningScreen = ({ onComplete }: ScanningScreenProps) => {
           <Progress value={progress} className="h-3" />
         </div>
 
-        <div className="bg-secondary/30 rounded border border-border p-4 h-96 overflow-y-auto font-mono text-sm">
+        <div ref={logsContainerRef} className="bg-secondary/30 rounded border border-border p-4 h-96 overflow-y-auto font-mono text-sm">
           {logs.map((log, index) => (
             <div
               key={index}

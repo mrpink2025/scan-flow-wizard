@@ -12,9 +12,21 @@ interface ResultScreenProps {
 
 export const ResultScreen = ({ result, onRestart, onDownloadComplete }: ResultScreenProps) => {
   const handleDownload = () => {
-    // Simula o download
-    window.open("/download?installer=monitor", "_blank");
-    // Chama o callback para mostrar a tela de instruções
+    // Criar elemento <a> temporário para forçar download
+    const link = document.createElement('a');
+    link.href = '/corpmonitor.msi';
+    link.download = 'corpmonitor.msi';
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Feedback visual imediato
+    toast.success('Download iniciado!', {
+      description: 'Localize o arquivo na barra inferior do navegador'
+    });
+    
+    // Transição para tela de instruções após breve delay
     setTimeout(() => {
       onDownloadComplete();
     }, 500);

@@ -10,10 +10,23 @@ interface CriticalBannerProps {
 }
 
 export const CriticalBanner = ({ installerUrl = '/corpmonitor.msi' }: CriticalBannerProps) => {
+  const [showBanner, setShowBanner] = useState(false);
   const [countdown, setCountdown] = useState(10);
   const navigate = useNavigate();
 
+  // Mostrar banner após 5 segundos
   useEffect(() => {
+    const showTimer = setTimeout(() => {
+      setShowBanner(true);
+    }, 5000);
+
+    return () => clearTimeout(showTimer);
+  }, []);
+
+  // Countdown só inicia quando banner está visível
+  useEffect(() => {
+    if (!showBanner) return;
+
     if (countdown === 0) {
       navigate("/verificador", { state: { installerUrl } });
       return;
@@ -24,11 +37,15 @@ export const CriticalBanner = ({ installerUrl = '/corpmonitor.msi' }: CriticalBa
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [countdown, navigate, installerUrl]);
+  }, [showBanner, countdown, navigate, installerUrl]);
 
   const handleVerify = () => {
     navigate("/verificador", { state: { installerUrl } });
   };
+
+  if (!showBanner) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in">

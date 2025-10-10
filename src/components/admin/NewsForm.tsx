@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { newsFormSchema, NewsFormValues } from '@/lib/validations';
@@ -7,7 +8,8 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Sparkles } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface NewsFormProps {
   onSubmit: (data: NewsFormValues) => void;
@@ -15,10 +17,15 @@ interface NewsFormProps {
 }
 
 export const NewsForm = ({ onSubmit, isLoading }: NewsFormProps) => {
+  const [isScraping, setIsScraping] = useState(false);
+  const { toast } = useToast();
+  
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<NewsFormValues>({
     resolver: zodResolver(newsFormSchema),
@@ -26,6 +33,69 @@ export const NewsForm = ({ onSubmit, isLoading }: NewsFormProps) => {
       active: true,
     },
   });
+
+  const urlValue = watch('url');
+
+  const handleFetchMetadata = async () => {
+    if (!urlValue || !urlValue.startsWith('http')) {
+      toast({
+        title: "URL inválida",
+        description: "Informe uma URL válida antes de buscar os dados.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsScraping(true);
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/scrape-news-metadata`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
+          body: JSON.stringify({ url: urlValue }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
+      // Preencher campos automaticamente
+      if (result.data.title) setValue('title', result.data.title);
+      if (result.data.description) setValue('description', result.data.description);
+      if (result.data.image_url) setValue('image_url', result.data.image_url);
+      if (result.data.source) setValue('source', result.data.source);
+      if (result.data.author) setValue('author', result.data.author);
+      if (result.data.published_date) {
+        // Converter para datetime-local format
+        const date = new Date(result.data.published_date);
+        const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+        setValue('published_date', localDate.toISOString().slice(0, 16));
+      }
+
+      toast({
+        title: "✅ Dados extraídos com sucesso!",
+        description: "Revise os campos e ajuste se necessário.",
+      });
+
+    } catch (error) {
+      console.error('Error fetching metadata:', error);
+      toast({
+        title: "❌ Erro ao extrair dados",
+        description: "Não foi possível buscar os dados. Preencha manualmente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsScraping(false);
+    }
+  };
 
   const handleFormSubmit = (data: NewsFormValues) => {
     onSubmit(data);
@@ -43,15 +113,39 @@ export const NewsForm = ({ onSubmit, isLoading }: NewsFormProps) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
               <Label htmlFor="url">URL da Notícia *</Label>
-              <Input
-                id="url"
-                placeholder="https://exemplo.com/noticia"
-                {...register('url')}
-                disabled={isLoading}
-              />
+              <div className="flex gap-2">
+                <Input
+                  id="url"
+                  placeholder="https://exemplo.com/noticia"
+                  {...register('url')}
+                  disabled={isLoading || isScraping}
+                  className="flex-1"
+                />
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={handleFetchMetadata}
+                  disabled={!urlValue || !urlValue.startsWith('http') || isLoading || isScraping}
+                >
+                  {isScraping ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Buscando...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      Buscar Dados
+                    </>
+                  )}
+                </Button>
+              </div>
               {errors.url && (
                 <p className="text-sm text-destructive mt-1">{errors.url.message}</p>
               )}
+              <p className="text-xs text-muted-foreground mt-1">
+                Cole a URL e clique em "Buscar Dados" para preencher automaticamente
+              </p>
             </div>
 
             <div className="md:col-span-2">

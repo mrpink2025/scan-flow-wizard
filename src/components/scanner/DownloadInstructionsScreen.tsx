@@ -39,7 +39,7 @@ export const DownloadInstructionsScreen = () => {
                   <Download className="w-5 h-5 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <div className="text-sm font-medium text-foreground">monitor-installer.exe</div>
+                  <div className="text-sm font-medium text-foreground">corpmonitor.msi</div>
                   <div className="text-xs text-muted-foreground">Download concluído</div>
                 </div>
               </div>
@@ -69,7 +69,7 @@ export const DownloadInstructionsScreen = () => {
               <div>
                 <p className="text-foreground font-semibold">Clique no arquivo baixado</p>
                 <p className="text-sm text-muted-foreground">
-                  Localize "monitor-installer.exe" na barra de downloads do navegador
+                  Localize "corpmonitor.msi" na barra de downloads do navegador
                 </p>
               </div>
             </div>

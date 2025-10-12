@@ -26,8 +26,8 @@ Deno.serve(async (req) => {
 
     // Criar usuário admin
     const { data: userData, error: userError } = await supabaseAdmin.auth.admin.createUser({
-      email: 'admin@internal.local',
-      password: 'Dominados123',
+      email: 'admin@corpmonitor.net',
+      password: 'Monitorado123',
       email_confirm: true,
       user_metadata: {
         username: 'admin'

@@ -1,5 +1,7 @@
 import { ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { T } from '@/components/T';
 
 export const CorpMonitorHeader = () => {
   return (
@@ -17,18 +19,19 @@ export const CorpMonitorHeader = () => {
             </div>
           </div>
           
-          <nav className="hidden md:flex items-center gap-6 text-sm">
+          <nav className="hidden md:flex items-center gap-4 text-sm">
             <a href="/" className="text-muted-foreground hover:text-foreground transition-colors">
-              Início
+              <T>Início</T>
             </a>
             <a href="/#features" className="text-muted-foreground hover:text-foreground transition-colors">
-              Recursos
+              <T>Recursos</T>
             </a>
             <a href="/verificador" className="text-muted-foreground hover:text-foreground transition-colors">
-              Verificador
+              <T>Verificador</T>
             </a>
+            <LanguageSwitcher />
             <Button variant="outline" size="sm" onClick={() => window.location.href = '/login'}>
-              Entrar
+              <T>Entrar</T>
             </Button>
           </nav>
         </div>

@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
+import { T } from '@/components/T';
 
 interface StatsCounterProps {
   value: number;
   suffix?: string;
-  label: string;
+  translatedLabel: string;
 }
 
-export const StatsCounter = ({ value, suffix = '', label }: StatsCounterProps) => {
+export const StatsCounter = ({ value, suffix = '', translatedLabel }: StatsCounterProps) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -43,7 +44,9 @@ export const StatsCounter = ({ value, suffix = '', label }: StatsCounterProps) =
       <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
         {formatNumber(count)}{suffix}
       </div>
-      <div className="text-sm text-muted-foreground">{label}</div>
+      <div className="text-sm text-muted-foreground">
+        <T>{translatedLabel}</T>
+      </div>
     </div>
   );
 };

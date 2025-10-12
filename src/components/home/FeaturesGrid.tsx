@@ -1,5 +1,6 @@
 import { Shield, Search, BarChart3, Lock, Zap, Globe } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { T } from '@/components/T';
 
 const features = [
   {
@@ -40,10 +41,10 @@ export const FeaturesGrid = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Recursos da Plataforma
+            <T>Recursos da Plataforma</T>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Tecnologia de ponta para proteger sua empresa contra as ameaças mais sofisticadas
+            <T>Tecnologia de ponta para proteger sua empresa contra as ameaças mais sofisticadas</T>
           </p>
         </div>
 
@@ -61,10 +62,14 @@ export const FeaturesGrid = () => {
                       <Icon className="w-6 h-6" />
                     </div>
                   </div>
-                  <CardTitle className="text-xl">{feature.title}</CardTitle>
+                  <CardTitle className="text-xl">
+                    <T>{feature.title}</T>
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">{feature.description}</p>
+                  <p className="text-muted-foreground">
+                    <T>{feature.description}</T>
+                  </p>
                 </CardContent>
               </Card>
             );

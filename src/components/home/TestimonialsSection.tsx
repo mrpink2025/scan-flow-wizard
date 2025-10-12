@@ -1,6 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Quote } from 'lucide-react';
+import { T } from '@/components/T';
 
 const testimonials = [
   {
@@ -25,10 +26,10 @@ export const TestimonialsSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Confiado por Líderes de Mercado
+            <T>Confiado por Líderes de Mercado</T>
           </h2>
           <p className="text-muted-foreground text-lg">
-            Veja o que nossos clientes dizem sobre o CorpMonitor
+            <T>Veja o que nossos clientes dizem sobre o CorpMonitor</T>
           </p>
         </div>
 
@@ -37,7 +38,9 @@ export const TestimonialsSection = () => {
             <Card key={index} className="relative">
               <CardContent className="pt-6">
                 <Quote className="w-10 h-10 text-primary/20 mb-4" />
-                <p className="text-lg mb-6 italic">"{testimonial.content}"</p>
+                <p className="text-lg mb-6 italic">
+                  "<T>{testimonial.content}</T>"
+                </p>
                 <div className="flex items-center gap-4">
                   <Avatar>
                     <AvatarFallback className="bg-primary/10 text-primary">
@@ -47,7 +50,7 @@ export const TestimonialsSection = () => {
                   <div>
                     <div className="font-semibold">{testimonial.name}</div>
                     <div className="text-sm text-muted-foreground">
-                      {testimonial.role} • {testimonial.company}
+                      <T>{testimonial.role}</T> • {testimonial.company}
                     </div>
                   </div>
                 </div>
@@ -59,7 +62,7 @@ export const TestimonialsSection = () => {
         {/* Client Logos */}
         <div className="mt-16 text-center">
           <p className="text-sm text-muted-foreground mb-8 uppercase tracking-wider">
-            Empresas que Confiam no CorpMonitor
+            <T>Empresas que Confiam no CorpMonitor</T>
           </p>
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-50">
             {['TechCorp', 'FinanceBank', 'RetailCo', 'HealthPlus'].map((company) => (

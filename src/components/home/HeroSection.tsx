@@ -2,6 +2,7 @@ import { ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { StatsCounter } from './StatsCounter';
+import { T } from '@/components/T';
 
 export const HeroSection = () => {
   const navigate = useNavigate();
@@ -20,14 +21,13 @@ export const HeroSection = () => {
         
         {/* Título */}
         <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
-          Proteja Sua Empresa Contra<br />
-          <span className="text-primary">Ameaças Cibernéticas</span>
+          <T>Proteja Sua Empresa Contra</T><br />
+          <span className="text-primary"><T>Ameaças Cibernéticas</T></span>
         </h1>
         
         {/* Subtítulo */}
         <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in">
-          Monitoramento 24/7, detecção automática de vulnerabilidades e 
-          correção em tempo real. Confie na plataforma líder de segurança corporativa.
+          <T>Monitoramento 24/7, detecção automática de vulnerabilidades e correção em tempo real. Confie na plataforma líder de segurança corporativa.</T>
         </p>
         
         {/* CTAs */}
@@ -37,22 +37,22 @@ export const HeroSection = () => {
             className="glow-border text-lg"
             onClick={() => navigate('/verificador')}
           >
-            Verificar Meu Sistema
+            <T>Verificar Meu Sistema</T>
           </Button>
           <Button 
             size="lg" 
             variant="outline"
             onClick={() => navigate('/noticias')}
           >
-            Ver Alertas de Segurança
+            <T>Ver Alertas de Segurança</T>
           </Button>
         </div>
         
         {/* Estatísticas */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto animate-fade-in">
-          <StatsCounter value={500000} suffix="+" label="Empresas Protegidas" />
-          <StatsCounter value={2000000} suffix="+" label="Ameaças Bloqueadas/Semana" />
-          <StatsCounter value={99.9} suffix="%" label="Uptime" />
+          <StatsCounter value={500000} suffix="+" translatedLabel="Empresas Protegidas" />
+          <StatsCounter value={2000000} suffix="+" translatedLabel="Ameaças Bloqueadas/Semana" />
+          <StatsCounter value={99.9} suffix="%" translatedLabel="Uptime" />
         </div>
       </div>
     </section>

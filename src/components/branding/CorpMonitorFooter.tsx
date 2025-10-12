@@ -21,7 +21,7 @@ export const CorpMonitorFooter = () => {
         
         <div className="text-center mb-4">
           <p className="text-sm text-muted-foreground">
-            CorpMonitor Inc. | San Francisco, CA | CNPJ 12.345.678/0001-90
+            CorpMonitor Inc. | San Francisco, CA
           </p>
         </div>
         

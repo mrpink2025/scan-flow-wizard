@@ -10,6 +10,7 @@ export const useLocalization = () => {
   const [location, setLocation] = useState<LocationData | null>(null);
   const [isDetecting, setIsDetecting] = useState(true);
   const [currentLanguage, setCurrentLanguage] = useState('pt');
+  const [languageVersion, setLanguageVersion] = useState(0);
 
   useEffect(() => {
     const detectLocation = async () => {
@@ -71,7 +72,10 @@ export const useLocalization = () => {
     
     // Limpar cache de traduções ao trocar idioma
     sessionStorage.clear();
+    
+    // Forçar re-render de todos os componentes
+    setLanguageVersion(prev => prev + 1);
   };
 
-  return { location, isDetecting, changeLanguage, currentLanguage };
+  return { location, isDetecting, changeLanguage, currentLanguage, languageVersion };
 };

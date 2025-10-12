@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useLocalization } from '@/hooks/useLocalization';
+import { toast } from 'sonner';
 
 const languages = [
   { code: 'pt', name: 'Português', flag: '🇧🇷' },
@@ -22,6 +23,12 @@ export const LanguageSwitcher = () => {
 
   const currentLang = languages.find(l => l.code === currentLanguage) || languages[0];
 
+  const handleLanguageChange = (lang: string) => {
+    changeLanguage(lang);
+    const selectedLang = languages.find(l => l.code === lang);
+    toast.success(`${selectedLang?.flag} Idioma alterado para ${selectedLang?.name}`);
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -34,7 +41,7 @@ export const LanguageSwitcher = () => {
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
-            onClick={() => changeLanguage(lang.code)}
+            onClick={() => handleLanguageChange(lang.code)}
             className={currentLanguage === lang.code ? 'bg-accent' : ''}
           >
             {lang.flag} {lang.name}

@@ -88,7 +88,7 @@ export const useTranslate = () => {
       }
 
       translate(originalText).then(setTranslatedText);
-    }, [originalText]);
+    }, [originalText, currentLanguage, translate]);
 
     return translatedText;
   };

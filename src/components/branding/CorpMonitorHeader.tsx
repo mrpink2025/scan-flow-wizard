@@ -1,9 +1,12 @@
 import { ShieldCheck } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { T } from '@/components/T';
 
 export const CorpMonitorHeader = () => {
+  const navigate = useNavigate();
+
   return (
     <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
@@ -20,17 +23,17 @@ export const CorpMonitorHeader = () => {
           </div>
           
           <nav className="hidden md:flex items-center gap-4 text-sm">
-            <a href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
               <T>Início</T>
-            </a>
+            </Link>
             <a href="/#features" className="text-muted-foreground hover:text-foreground transition-colors">
               <T>Recursos</T>
             </a>
-            <a href="/verificador" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/verificador" className="text-muted-foreground hover:text-foreground transition-colors">
               <T>Verificador</T>
-            </a>
+            </Link>
             <LanguageSwitcher />
-            <Button variant="outline" size="sm" onClick={() => window.location.href = '/login'}>
+            <Button variant="outline" size="sm" onClick={() => navigate('/login')}>
               <T>Entrar</T>
             </Button>
           </nav>

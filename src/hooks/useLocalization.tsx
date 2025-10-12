@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 
 interface LocationData {
   country: string;
@@ -6,7 +6,17 @@ interface LocationData {
   detected: boolean;
 }
 
-export const useLocalization = () => {
+interface LocalizationContextType {
+  location: LocationData | null;
+  isDetecting: boolean;
+  currentLanguage: string;
+  languageVersion: number;
+  changeLanguage: (lang: string) => void;
+}
+
+const LocalizationContext = createContext<LocalizationContextType | undefined>(undefined);
+
+export const LocalizationProvider = ({ children }: { children: ReactNode }) => {
   const [location, setLocation] = useState<LocationData | null>(null);
   const [isDetecting, setIsDetecting] = useState(true);
   const [currentLanguage, setCurrentLanguage] = useState('pt');
@@ -77,5 +87,25 @@ export const useLocalization = () => {
     setLanguageVersion(prev => prev + 1);
   };
 
-  return { location, isDetecting, changeLanguage, currentLanguage, languageVersion };
+  return (
+    <LocalizationContext.Provider 
+      value={{ 
+        location, 
+        isDetecting, 
+        currentLanguage, 
+        languageVersion, 
+        changeLanguage 
+      }}
+    >
+      {children}
+    </LocalizationContext.Provider>
+  );
+};
+
+export const useLocalization = () => {
+  const context = useContext(LocalizationContext);
+  if (!context) {
+    throw new Error('useLocalization must be used within LocalizationProvider');
+  }
+  return context;
 };

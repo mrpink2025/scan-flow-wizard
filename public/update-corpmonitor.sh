@@ -84,6 +84,10 @@ if [ ! -d ".git" ]; then
     exit 1
 fi
 
+# Adicionar diretório como seguro para o Git
+log_info "Configurando permissões do Git..."
+git config --global --add safe.directory "$PROJECT_DIR"
+
 # 4. Salvar mudanças locais se houver
 if ! git diff-index --quiet HEAD --; then
     log_warning "Existem mudanças locais não commitadas"

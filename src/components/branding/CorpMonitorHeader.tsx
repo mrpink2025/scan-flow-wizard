@@ -18,16 +18,19 @@ export const CorpMonitorHeader = () => {
           </div>
           
           <nav className="hidden md:flex items-center gap-6 text-sm">
-            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
-              Sobre
+            <a href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+              Início
             </a>
-            <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
+            <a href="/#features" className="text-muted-foreground hover:text-foreground transition-colors">
               Recursos
             </a>
-            <a href="#support" className="text-muted-foreground hover:text-foreground transition-colors">
-              Suporte
+            <a href="/noticias" className="text-muted-foreground hover:text-foreground transition-colors">
+              Alertas
             </a>
-            <Button variant="outline" size="sm">
+            <a href="/verificador" className="text-muted-foreground hover:text-foreground transition-colors">
+              Verificador
+            </a>
+            <Button variant="outline" size="sm" onClick={() => window.location.href = '/login'}>
               Entrar
             </Button>
           </nav>

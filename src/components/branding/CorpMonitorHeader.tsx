@@ -24,9 +24,6 @@ export const CorpMonitorHeader = () => {
             <a href="/#features" className="text-muted-foreground hover:text-foreground transition-colors">
               Recursos
             </a>
-            <a href="/noticias" className="text-muted-foreground hover:text-foreground transition-colors">
-              Alertas
-            </a>
             <a href="/verificador" className="text-muted-foreground hover:text-foreground transition-colors">
               Verificador
             </a>

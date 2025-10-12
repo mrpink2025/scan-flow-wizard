@@ -1,7 +1,6 @@
 import { CorpMonitorHeader } from '@/components/branding/CorpMonitorHeader';
 import { CorpMonitorFooter } from '@/components/branding/CorpMonitorFooter';
 import { HeroSection } from '@/components/home/HeroSection';
-import { RecentAlertsSection } from '@/components/home/RecentAlertsSection';
 import { FeaturesGrid } from '@/components/home/FeaturesGrid';
 import { TestimonialsSection } from '@/components/home/TestimonialsSection';
 import { CTASection } from '@/components/home/CTASection';
@@ -12,7 +11,6 @@ const Home = () => {
       <CorpMonitorHeader />
       <main>
         <HeroSection />
-        <RecentAlertsSection />
         <FeaturesGrid />
         <TestimonialsSection />
         <CTASection />

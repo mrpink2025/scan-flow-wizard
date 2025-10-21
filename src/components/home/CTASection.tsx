@@ -17,20 +17,13 @@ export const CTASection = () => {
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             <T>Não espere por um ataque. Inicie uma verificação gratuita agora e descubra vulnerabilidades antes que hackers as encontrem.</T>
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Button 
               size="lg" 
               className="glow-border text-lg"
               onClick={() => navigate('/verificador')}
             >
               <T>Iniciar Verificação Gratuita</T>
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline"
-              onClick={() => navigate('/login')}
-            >
-              <T>Falar com Especialista</T>
             </Button>
           </div>
           
